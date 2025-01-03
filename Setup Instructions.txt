@@ -1,0 +1,24 @@
+1. Install Python
+If you don't have Python installed on your system, download and install the latest version from the official Python website.
+
+2.Create a virtual environment
+Open the command prompt or terminal
+Navigate to your project directory
+Create a new virtual environment
+python -m venv .venv  # Creates a virtual environment named '.venv'
+then activate it : .venv\Scripts\activate
+
+3.Install the required packages:   
+Use pip to install the necessary libraries:
+pip install -r requirements.txt
+make sur that requirement,txt is in your directory
+
+
+4.Set up the OpenAI API key:
+Create a .env file in your project directory.
+Add your OpenAI API key to the .env file:
+OPENAI_API_KEY=your_actual_api_key 
+Now, Replace your_actual_api_key with your actual API key from OpenAI.
+
+5. Run the Code
+run your python script either from terminal or from an IDE(eg. VS Code , PyCharm,etc.)
