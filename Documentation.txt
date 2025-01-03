@@ -1,0 +1,86 @@
+Technical Documentation
+This project utilizes Python and several libraries to automatically generate product stories from a collection of text files. The code is designed to analyze user feedback, extract key insights, and present them in a clear and concise narrative, similar to the examples provided in the sondermind_data.zip file.
+
+Libraries Used
+
+zipfile: This built-in library is used to extract the contents of the zip file containing the input data.
+os: This built-in library provides functions for interacting with the operating system, such as listing files in a directory (os.listdir) and creating/deleting directories.
+re: This built-in library provides regular expression operations, used for pattern matching and cleaning the text data (e.g., removing punctuation using re.sub()).
+shutil: This library provides high-level file operations, such as deleting directories and their contents (shutil.rmtree).
+nltk: The Natural Language Toolkit is used for sentiment analysis. Specifically, the SentimentIntensityAnalyzer from nltk.sentiment is used to calculate the sentiment score of the text.
+openai: This library allows interaction with the OpenAI API. It's used to access the ChatGPT language model for topic extraction and summarization.
+python-dotenv: This library is used to load environment variables from a .env file, which helps in managing sensitive information like API keys.
+Algorithms and Techniques
+
+Preprocessing: The code preprocesses the text data by:
+
+Removing punctuation using re.sub().
+Converting all text to lowercase.
+Optionally performing stemming or lemmatization using NLTK (this can be added to the preprocess_text function).
+Removing all HTML CSS tags using Beautiful Soap
+Topic Extraction: The code uses the ChatGPT API to extract key topics and themes from the text. It constructs a prompt that includes:
+
+Key themes identified during the analysis (user experience, technical issues, etc.).
+Seed topics relevant to the specific file being analyzed.
+Sentiment Analysis: The code uses NLTK's SentimentIntensityAnalyzer to perform sentiment analysis on the text, classifying it as positive, negative, or neutral based on a sentiment score.
+
+Story Type Determination: The code uses a rule-based system to determine the story type (Concern, Win, Insight, Opportunity) based on the extracted topics, sentiment, and data points. For example:
+
+If the sentiment is negative and the topics include terms like "technical issues," "errors," or "delays," the story is categorized as a "Concern."
+If the sentiment is positive and the data points indicate improvement in key metrics, the story is categorized as a "Win."
+Story Generation: The code uses templates for different story types to generate the product stories. These templates include sections for:
+
+Headline
+Summary
+Impact (or Contributing Factors for "Win" stories)
+User Perspectives
+Recommendations
+(Other relevant sections based on the story type)
+The templates are filled in with the extracted information and formatted using Markdown.
+
+System Architecture Overview
+The system follows a modular architecture with the following components:
+
+Data Loading and Preprocessing:
+
+Input: Zip file containing text files.
+Output: Preprocessed text data organized by file type.
+Topic Extraction:
+
+Input: Preprocessed text.
+Output: List of extracted topics.
+Sentiment Analysis:
+
+Input: Preprocessed text.
+Output: Sentiment classification (positive, negative, neutral).
+Data Point Extraction:
+
+Input: Preprocessed text.
+Output: List of extracted data points.
+Story Type Determination:
+
+Input: Extracted topics, sentiment, data points.
+Output: Story type classification (Concern, Win, Insight, Opportunity).
+Story Generation:
+
+Input: Story type, topics, sentiment, data points, references.
+Output: Generated product story in Markdown format.
+Methodology Explanation
+This project implements an LLM-driven approach for topic extraction, as explored in the research paper "Large Language Models Offer an Alternative to the Traditional Approach of Topic Modelling". This approach leverages the language understanding capabilities of LLMs to identify key themes and topics in the text data, providing a more nuanced and context-aware analysis compared to traditional methods like Latent Dirichlet Allocation (LDA).
+
+Topic Extraction: The code utilizes the ChatGPT API to extract topics. It constructs a prompt that includes key themes (user experience, technical issues, etc.) and seed topics relevant to the specific file being analyzed. This prompt is then sent to the ChatGPT model, and the response is processed to extract the identified topics.
+
+Sentiment Analysis: NLTK's SentimentIntensityAnalyzer is employed to determine the sentiment of the text. This tool calculates a sentiment score based on a pre-trained lexicon and rules, classifying the text as positive, negative, or neutral.
+
+Story Type Determination: A rule-based system is used to categorize the story based on the extracted topics, sentiment, and data points. These rules are derived from the analysis of the reference data, capturing patterns and characteristics of different story types. For example, if the sentiment is negative and the topics include terms related to technical issues, the story is classified as a "Concern."
+
+Summarisation using LLM :LLMs use to generate summaries that are clear, well-structured, and written in a natural-sounding language, making the stories more engaging and easier to understand.
+
+Story Generation: The code employs templates for each story type (Concern, Win, Insight, Opportunity). These templates are structured based on the patterns observed in the reference data and include sections for the headline, summary, impact, user perspectives, and recommendations. The templates are filled in with the extracted information and formatted using Markdown to create well-structured and readable stories.
+
+Assumptions and Limitations
+Data Format: The code assumes that the input data is in a zip file containing a single folder with .txt files.
+File Naming: The code assumes that the file names follow a specific pattern (file_type_number.txt).
+Topic Extraction: The accuracy of topic extraction depends on the quality of the prompts and the capabilities of the ChatGPT API. There might be cases where the LLM fails to extract relevant topics or extracts irrelevant ones.
+Story Type Determination: The rule-based system for story type classification might not be perfect and may require further refinement or the use of a more sophisticated classifier.
+Story Generation: The quality of the generated stories depends on the completeness and accuracy of the templates and the extracted information. There might be cases where the generated stories require manual editing or refinement.
